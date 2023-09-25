@@ -40,12 +40,13 @@
 # Close the connection to the robot
 # robot.close()
 
-# -------------------------------------
+# ---------------------------------------------------------------------------------------------------------------------------
 # training pseudo code
 
-# 1 - get into position, a starting point (initilized position, not really up to the robot)
+# 1 - get into position, a starting point 
+#     (initilized position, not really up to the robot)
 
-# 2 - define an enviroment 
+# 2 - define an enviroment, the robot will create a new enviroment if it does not already exist 
 #     (some sort of graphical interface, a simulation if you will. x axis left and right,  y axis up and down, z axis (optional))
 
 # 3 - it needs to look before it moves, get data on "what" is in its way, e.g. a bump in the pipe 
@@ -69,5 +70,24 @@
 # 9 - reward the robot (some reward system, e.g. increase probability of a succeeding choice)
 
 # 10 - back to step two, to test other enviroments, or try the same enviroment again, to be sure of an working option
+
+# ---------------------------------------------------------------------------------------------------------------------------
+
+
+# example of an enviroment checking code
+real_enviroment = False
+enviroments = ["Dent", "South Bump", "North Bump", "West Bump", "East Bump"]
+
+while real_enviroment == False:
+    enviroment = input("state an enviroment: ")
+    if enviroment not in enviroments:
+        print("Please enter an actaul enviroment")
+    else:
+        real_enviroment = True
+
+print("thats a valid enviroment")
+
+
+
 
 
