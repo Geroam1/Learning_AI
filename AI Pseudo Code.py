@@ -87,6 +87,7 @@
 
 # print("thats a valid enviroment")
 
+# CV2 library
 import cv2
 import numpy as np
 
