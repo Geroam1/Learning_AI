@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 
 # Read an image from file, the zero arguement makes it grayscale
-image = cv.imread('C:/Users/speed/Desktop/VS Code Stuff/Uni VS Code Stuff/Github Repositories/EXPO AI Learning/Learning_AI/Images for recognition/Inside of a pipe 3.jpg', 0)
+image = cv.imread('C:/Users/speed/Desktop/VS Code Stuff/Uni VS Code Stuff/Github Repositories/EXPO AI Learning/Learning_AI/Images for recognition/Inside of a pipe 5.jpg', 0)
 
 # turns the image into black and white
 ret,thresh_binary = cv.threshold(image,127,255,cv.THRESH_BINARY)
@@ -17,7 +17,14 @@ cv.imshow('Image', thresh_binary)
 # image_blurred = cv.GaussianBlur(thresh_binary, (9, 9), 1)
 
 # Use the Hough Circle Transform to detect circles in the image
-circles = cv.HoughCircles(thresh_binary, cv.HOUGH_GRADIENT, dp=1, minDist=400, param1=50, param2=60, minRadius=0, maxRadius=500)
+
+# dp arguement: Inverse ratio of accumulator resolution to image resolution (1 means same resolution)
+# minDist arguement: Minimum distance between the centers of detected circles in pixels
+# param1 arguement: Higher threshold for edge detection in the Hough transform
+# param2 arguement: Accumulator threshold for circle detection
+# minRadius arguement: Minimum radius of detected circles (set to 0 for any radius) in pixels
+# maxRadius arguement: Maximum radius of detected circles (set to an upper limit, e.g., 1920) in pixels
+circles = cv.HoughCircles(thresh_binary, cv.HOUGH_GRADIENT, dp=1, minDist=400, param1=50, param2=60, minRadius=0, maxRadius=1920)
 
 # Ensure that at least one circle was found
 if circles is not None:
