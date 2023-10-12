@@ -2,30 +2,36 @@ import numpy as np
 import cv2 as cv
 
 # Open the default camera (camera index 0)
-# cap = cv.VideoCapture(0)
+cap = cv.VideoCapture(0)
 
-# # infinite loop that keeps the camera open
-# while True:
-#     # Capture a frame from the camera
-#     # ret is as a boolean value that represents if the frame capture was sucessful
-#     ret, frame = cap.read()
+# infinite loop that keeps the camera open
+while True:
+    # Capture a frame from the camera
+    # ret is as a boolean value that represents if the frame capture was sucessful
+    ret, frame = cap.read()
+   
+    # turns the capture purely black and white
+    grayscale = cv.cvtColor(frame,  cv.COLOR_BGR2GRAY)
+    ret, thresh_hold = cv.threshold(grayscale, 127,255,cv.THRESH_BINARY)
+   
+   
+    # Display the frame
+    cv.imshow('Video', thresh_hold)
 
-#     # Display the frame
-#     cv.imshow('Video', frame)
+    # Exit the loop if the 'q' key is pressed (closes the camera when q is clicked)
+    if cv.waitKey(1) == ord('q'):
+        break
 
-#     # Exit the loop if the 'q' key is pressed (closes the camera when q is clicked)
-#     if cv.waitKey(1) == ord('q'):
-#         break
+# Release the camera and close all OpenCV windows
+cap.release()
+cv.destroyAllWindows()
 
-# # Release the camera and close all OpenCV windows
-# cap.release()
-# cv.destroyAllWindows()
-
-import cv2 as cv
-import numpy as np
+"""
+White Circle Detection with video camera
+"""
 
 # Open the default camera (camera index 0)
-cap = cv.VideoCapture(1)
+cap = cv.VideoCapture(0)
 
 while True:
     # Capture a frame from the camera
@@ -67,9 +73,13 @@ while True:
     cv.imshow('Video with Circles', frame)
 
     # Exit the loop if the 'q' key is pressed
-    if cv.waitKey(1) & 0xFF == ord('q'):
+    if cv.waitKey(1) == ord('q'):
         break
 
 # Release the camera and close all OpenCV windows
 cap.release()
 cv.destroyAllWindows()
+
+"""
+Black Circle Detection with video camera
+"""
