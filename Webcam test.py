@@ -31,7 +31,7 @@ White Circle Detection with video camera
 """
 
 # Open the default camera (camera index 0)
-# cap = cv.VideoCapture(0)
+cap = cv.VideoCapture(0)
 
 while True:
     # Capture a frame from the camera
@@ -61,7 +61,7 @@ while True:
     # Ensure that at least one circle was found
     if circles is not None:
         circles = np.uint16(np.around(circles))
-        print("Forward")
+        
         
         for circle in circles[0, :]:
             # Extract the center and radius of the circle
