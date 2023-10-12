@@ -37,9 +37,10 @@ while True:
 
     # Convert the frame to grayscale
     gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+    ret,thresh_binary = cv.threshold(gray,127,255,cv.THRESH_BINARY)
 
     # Apply Gaussian blur to reduce noise
-    blurred = cv.GaussianBlur(gray, (9, 9), 2)
+    blurred = cv.GaussianBlur(thresh_binary, (9, 9), 2)
 
     # Use the Hough Circle Transform to detect circles in the frame
     circles = cv.HoughCircles(
@@ -56,6 +57,7 @@ while True:
     # Ensure that at least one circle was found
     if circles is not None:
         circles = np.uint16(np.around(circles))
+
         print("Forward")
          
         for circle in circles[0, :]:
@@ -63,10 +65,10 @@ while True:
             center_x, center_y, radius = circle[0], circle[1], circle[2]
 
             # Draw the circle on the original frame
-            cv.circle(frame, (center_x, center_y), radius, (0, 255, 0), 2)
+            cv.circle(thresh_binary, (center_x, center_y), radius, (0, 255, 0), 2)
 
     # Display the frame with detected circles
-    cv.imshow('Video with Circles', frame)
+    cv.imshow('Video with Circles', thresh_binary)
 
     # Exit the loop if the 'q' key is pressed
     if cv.waitKey(1) == ord('q'):
