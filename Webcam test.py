@@ -25,7 +25,7 @@ import cv2 as cv
 import numpy as np
 
 # Open the default camera (camera index 0)
-cap = cv.VideoCapture(0)
+cap = cv.VideoCapture(1)
 
 while True:
     # Capture a frame from the camera
@@ -55,7 +55,7 @@ while True:
     # Ensure that at least one circle was found
     if circles is not None:
         circles = np.uint16(np.around(circles))
-
+        print("Forward")
         for circle in circles[0, :]:
             # Extract the center and radius of the circle
             center_x, center_y, radius = circle[0], circle[1], circle[2]
