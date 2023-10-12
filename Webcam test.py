@@ -4,23 +4,18 @@ import cv2 as cv
 # Open the default camera (camera index 0)
 cap = cv.VideoCapture(0)
 
-# infinite loop that keeps the camera open
-while True:
-    # Capture a frame from the camera
-    # ret is as a boolean value that represents if the frame capture was sucessful
-    ret, frame = cap.read()
-    
-    # turns the capture purely black and white
-    grayscale = cv.cvtColor(frame,  cv.COLOR_BGR2GRAY)
-    ret, thresh_hold = cv.threshold(grayscale, 127,255,cv.THRESH_BINARY)
-    
-    
-    # Display the frame
-    cv.imshow('Video', thresh_hold)
+# # infinite loop that keeps the camera open
+# while True:
+#     # Capture a frame from the camera
+#     # ret is as a boolean value that represents if the frame capture was sucessful
+#     ret, frame = cap.read()
 
-    # Exit the loop if the 'q' key is pressed (closes the camera when q is clicked)
-    if cv.waitKey(1) == ord('q'):
-        break
+#     # Display the frame
+#     cv.imshow('Video', frame)
+
+#     # Exit the loop if the 'q' key is pressed (closes the camera when q is clicked)
+#     if cv.waitKey(1) == ord('q'):
+#         break
 
 # Release the camera and close all OpenCV windows
 cap.release()
@@ -80,10 +75,3 @@ while True:
 # Release the camera and close all OpenCV windows
 cap.release()
 cv.destroyAllWindows()
-
-"""
-Black Circle Detection with video camera
-"""
-
-
-
