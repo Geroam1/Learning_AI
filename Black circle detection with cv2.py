@@ -2,9 +2,11 @@ import cv2 as cv
 import numpy as np
 
 # Read an image from file, the zero arguement makes it grayscale
-image = cv.imread('C:/Users/speed/Desktop/VS Code Stuff/Uni VS Code Stuff/Github Repositories/EXPO AI Learning/Learning_AI/Images for recognition/Inside of a pipe 5.jpg', 0)
+image = cv.imread('Images for recognition/Inside of a pipe 2.jpg', 0)
 
 # turns the image into black and white
+
+
 ret,thresh_binary = cv.threshold(image,127,255,cv.THRESH_BINARY)
 
 # # Convert the image to grayscale

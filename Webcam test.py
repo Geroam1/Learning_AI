@@ -63,25 +63,14 @@ while True:
     # if a circle is found
     if circles is not None:
         circles = np.uint16(np.around(circles))
-    
-        # checking if a circle is actually there, checks 10 times    
-        if ReactionCount < 10:
-            ReactionCount += 1
-            
-            # if it confirms a circle is present outputs the image with the circle in it
-            if ReactionCount == 10:
-                print("Circle Found")
-                cv.imshow('Image with Circle', frame)
-            else:
-                print("Checking circle Legitness")
-
+        print("Forward")
          
         for circle in circles[0, :]:
             # Extract the center and radius of the circle
             center_x, center_y, radius = circle[0], circle[1], circle[2]
 
             # Draw the circle on the original frame
-            cv.circle(thresh_binary, (center_x, center_y), radius, (170, 255, 170), 2)
+            cv.circle(frame, (center_x, center_y), radius, (0, 255, 0), 2)
 
     # Display the frame with detected circles
     cv.imshow('Video with Circles', thresh_binary)
