@@ -67,6 +67,9 @@ while True:
     cv.imshow('Video with Circles', thresh_binary)
 
     # Exit the loop if the 'q' key is pressed
+    
+    # waitkey returns the ordinal value of any key press on the keyboard
+    # so if that key is q it will return the ordinal value of q resolving the if condition 
     if cv.waitKey(1) == ord('q'):
         break
 
