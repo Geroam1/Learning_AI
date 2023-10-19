@@ -22,26 +22,32 @@ cap.release()
 cv.destroyAllWindows()
 
 """
-White Circle Detection with video camera
+Circle Detection with video camera
 """
 
 # Open the default camera (camera index 0)
 cap = cv.VideoCapture(0)
 
+ReactionCount = 0
 while True:
     # Capture a frame from the camera
     ret, frame = cap.read()
-
+    
+    # resizes the frame, inturn making the video bigger (or smaller)
+    frame = cv.resize(frame, (1440, 850))
+    
+    # if a frame isnt found break the loop
     if not ret:
         break
 
     # Convert the frame to grayscale
     gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+    ret,thresh_binary = cv.threshold(gray,127,255,cv.THRESH_BINARY)
 
     # Apply Gaussian blur to reduce noise
-    blurred = cv.GaussianBlur(gray, (9, 9), 2)
+    blurred = cv.GaussianBlur(thresh_binary, (9, 9), 2)
 
-    # Use the Hough Circle Transform to detect circles in the frame
+    # Uses the Hough Circle function to detect circles in the frame
     circles = cv.HoughCircles(
         blurred,
         cv.HOUGH_GRADIENT,
@@ -54,24 +60,41 @@ while True:
     )
 
     # Ensure that at least one circle was found
+    # if a circle is found
     if circles is not None:
         circles = np.uint16(np.around(circles))
-        print("Forward")
+    
+        # checking if a circle is actually there, checks 10 times    
+        if ReactionCount < 10:
+            ReactionCount += 1
+            
+            # if it confirms a circle is present outputs the image with the circle in it
+            if ReactionCount == 10:
+                print("Circle Found")
+                cv.imshow('Image with Circle', frame)
+            else:
+                print("Checking circle Legitness")
+
          
         for circle in circles[0, :]:
             # Extract the center and radius of the circle
             center_x, center_y, radius = circle[0], circle[1], circle[2]
 
             # Draw the circle on the original frame
-            cv.circle(frame, (center_x, center_y), radius, (0, 255, 0), 2)
+            cv.circle(thresh_binary, (center_x, center_y), radius, (170, 255, 170), 2)
 
     # Display the frame with detected circles
-    cv.imshow('Video with Circles', frame)
+    cv.imshow('Video with Circles', thresh_binary)
 
     # Exit the loop if the 'q' key is pressed
     if cv.waitKey(1) == ord('q'):
         break
 
+
 # Release the camera and close all OpenCV windows
 cap.release()
 cv.destroyAllWindows()
+
+
+
+
