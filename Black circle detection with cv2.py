@@ -30,7 +30,7 @@ circles = cv.HoughCircles(thresh_binary, cv.HOUGH_GRADIENT, dp=1, minDist=400, p
 
 # Ensure that at least one circle was found
 if circles is not None:
-    print("Black Circle Found")
+    print("Circle Found")
     circles = np.uint16(np.around(circles))
 
     for circle in circles[0, :]:

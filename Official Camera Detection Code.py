@@ -22,7 +22,7 @@ cap.release()
 cv.destroyAllWindows()
 
 """
-White Circle Detection with video camera
+Circle Detection with video camera
 """
 
 # Open the default camera (camera index 0)
@@ -58,7 +58,7 @@ while True:
     if circles is not None:
         circles = np.uint16(np.around(circles))
 
-        print("Forward")
+        print("Forward", end = '\r')
          
         for circle in circles[0, :]:
             # Extract the center and radius of the circle
@@ -66,6 +66,8 @@ while True:
 
             # Draw the circle on the original frame
             cv.circle(thresh_binary, (center_x, center_y), radius, (0, 255, 0), 2)
+    else:
+        print('no circles found', end = '\r')
 
     # Display the frame with detected circles
     cv.imshow('Video with Circles', thresh_binary)
