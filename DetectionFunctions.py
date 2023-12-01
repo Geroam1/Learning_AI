@@ -35,16 +35,3 @@ def update_Circle(amount, CircleBin):
     with open(CircleBin, "w") as file:
         # writes it as a string version of the variable
         file.write(str(Circle))
-
-
-
-# # using the function like this will make the variable permantantly 1
-# Circle = get_CircleBin()
-
-# # using the update function like this will make the circle value always 0
-# update_Circle(-Circle)
-
-# update_Circle(1)
-# Circle = get_CircleBin()
-  
-# print(Circle)
