@@ -40,12 +40,12 @@ while True:
     circles = cv.HoughCircles(
         blurred,
         cv.HOUGH_GRADIENT,
-        dp=1,
-        minDist=100,  # Adjust the minimum distance between circles
-        param1=10,   # adjust sensitivity
-        param2=30,   # Adjust this threshold for circle detection
-        minRadius=0,
-        maxRadius=100  # Adjust the maximum radius of the circles you want to detect
+        dp=1,          # inverse ratio of the accumulator resolution to the image resolution.
+        minDist=100,   # minimum distance between the centers of the detected circles.
+        param1=10,     # higher threshold for edge detection. 
+        param2=30,     # accumulator threshold for circle detection. Lower values allow more circles to be detected.
+        minRadius=0,   # minimum radius of the circles to be detected.
+        maxRadius=100  # maximum radius of the circles to be detected.
     )
 
     # ensures that at least one circle was found if a circle is found
