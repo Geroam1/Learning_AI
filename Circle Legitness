@@ -10,8 +10,12 @@ Circle_Text_File_path = "CircleBin.txt"
 # 0 - there is not a circle
 Circle = 0
 
-# Open the default camera (camera index 0)
+# open the default camera (camera index 0)
 cap = cv.VideoCapture(0)
+
+# sets the capture to fill the screen
+cv.namedWindow('Side-by-Side Capture', cv.WINDOW_NORMAL)
+cv.setWindowProperty('Side-by-Side Capture', cv.WND_PROP_FULLSCREEN, cv.WINDOW_FULLSCREEN)
 
 ReactionCount = 0
 while True:
@@ -19,37 +23,36 @@ while True:
     ret, frame = cap.read()
 
     # resizes the frame, inturn making the video bigger (or smaller)
-    frame = cv.resize(frame, (960, 540))
-    
+    # frame = cv.resize(frame, (960, 540))
+
     # if a frame isnt found break the loop
     if not ret:
         break
 
-    # Convert the frame to grayscale
+    # Convert the frame to grayscale for a no color capture
     gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
-    ret,thresh_binary = cv.threshold(gray,127,255,cv.THRESH_BINARY)
+    ret, thresh_binary = cv.threshold(gray,127,255,cv.THRESH_BINARY)
 
     # Apply Gaussian blur to reduce noise
     blurred = cv.GaussianBlur(thresh_binary, (9, 9), 2)
 
-    # Uses the Hough Circle function to detect circles in the frame
+    # HoughCircles function for circle detection
     circles = cv.HoughCircles(
         blurred,
         cv.HOUGH_GRADIENT,
         dp=1,
         minDist=100,  # Adjust the minimum distance between circles
-        param1=50,
+        param1=10,   # adjust sensitivity
         param2=30,   # Adjust this threshold for circle detection
         minRadius=0,
         maxRadius=100  # Adjust the maximum radius of the circles you want to detect
     )
 
-    # Ensure that at least one circle was found
-    # if a circle is found
+    # ensures that at least one circle was found if a circle is found
     if circles is not None:
         circles = np.uint16(np.around(circles))
         
-        # checks 10 times if a circle is there for sure
+        # checks 100 times if a circle is there for sure
         if ReactionCount < 100:
             ReactionCount += 1
             
@@ -59,19 +62,29 @@ while True:
                 
                 # updates the binary circle value to 1
                 Circle = 1
-                cv.imshow('Image with Circle', thresh_binary)
+                cv.imshow('Image With Circle', thresh_binary)
             else:
                 print(f"  Circle found, Reaction count = {ReactionCount}", end = '\r')
-         
+                
         for circle in circles[0, :]:
             # Extract the center and radius of the circle
             center_x, center_y, radius = circle[0], circle[1], circle[2]
 
             # Draw the circle on the original frame
             cv.circle(thresh_binary, (center_x, center_y), radius, (170, 255, 170), 2)
+    
+    
+    # resizes the thresholded capture for concatnating
+    thresh_binary_color = cv.cvtColor(thresh_binary, cv.COLOR_GRAY2BGR)
+        
+    # concatenates the colour capture and the none colour capture
+    side_by_side_frame = np.hstack((frame, thresh_binary_color))
 
-    # Display the frame with detected circles
-    cv.imshow('Video with Circles', thresh_binary)
+    # output captures
+    cv.imshow('Side-by-Side Capture', side_by_side_frame)
+    
+    # cv.imshow('Threshold Capture', thresh_binary)
+    # cv.imshow('Clear Capture', frame)
 
     # Exit the loop if the 'q' key is pressed
     
@@ -79,7 +92,6 @@ while True:
     # so if that key is q it will return the ordinal value of q resolving the if condition 
     if cv.waitKey(1) == ord('q'):
         break
-
 
 # Release the camera and close all OpenCV windows
 cap.release()
